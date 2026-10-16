@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Free Side Income</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--ac:#1a8cff;--dg:#e5484d;--r:12px}
+[data-theme=light]{--bg:#f3f5f9;--sb:#fff;--cd:#fff;--bd:#e6e9f0;--tx:#1f2a44;--mu:#9aa3b5;--in:#f3f5f9;color-scheme:light}
+[data-theme=dark]{--bg:#000;--sb:#0d0d0f;--cd:#111113;--bd:#232326;--tx:#fff;--mu:#8a8a93;--in:#141416;color-scheme:dark}
+*{box-sizing:border-box;margin:0}
+html,body{height:100%;overflow:hidden}
+body{font:400 13px Poppins,system-ui,sans-serif;background:var(--bg);color:var(--tx);padding-top:env(safe-area-inset-top)}
+button{font:inherit;color:inherit;cursor:pointer}
+.app{display:flex;height:100%;background:var(--bg)}
+.rail{display:none;width:64px;flex-direction:column;align-items:center;gap:8px;padding:14px 0;background:var(--sb);border-right:1px solid var(--bd)}
+.rb{width:38px;height:38px;border-radius:10px;border:0;background:none;font-size:17px}
+.rb.on{background:var(--ac)}
+.side{display:none;width:236px;flex-direction:column;gap:4px;padding:18px 14px;background:var(--sb);border-right:1px solid var(--bd)}
+.logo{font-weight:600;font-size:17px;color:var(--ac);margin-bottom:16px}
+.side h3{font-size:14px;font-weight:600;margin:0 0 8px 4px}
+.ni{display:flex;gap:10px;align-items:center;width:100%;padding:10px 12px;border:0;border-radius:9px;background:none;color:var(--mu);text-align:start}
+.ni.on{background:var(--ac);color:#fff}
+.bd{margin-inline-start:auto;background:var(--dg);color:#fff;font-size:10px;border-radius:4px;padding:1px 6px}
+.pill{display:flex;margin-top:auto;padding:4px;border-radius:99px;background:var(--in)}
+.pill button{flex:1;padding:8px;border:0;border-radius:99px;background:none;color:var(--mu)}
+.pill .on{background:var(--ac);color:#fff}
+main{flex:1;overflow:auto;padding:18px 16px 96px}
+.top{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between}
+h1{font-size:22px;font-weight:600}
+.srch{width:100%;max-width:260px;padding:10px 12px;border:1px solid var(--bd);border-radius:10px;background:var(--in);color:var(--tx);font:inherit}
+.me{display:flex;gap:14px;align-items:center;margin:16px 0 4px;padding-bottom:16px;border-bottom:1px solid var(--bd)}
+.av{display:grid;place-items:center;width:72px;height:56px;border-radius:12px;background:linear-gradient(135deg,var(--ac),#6ac3ff);color:#fff;font-size:22px;font-weight:600}
+.me b{font-size:16px;font-weight:600}.me small{display:block;color:var(--mu)}
+.sh{display:flex;justify-content:space-between;margin:20px 0 10px;padding-bottom:8px;border-bottom:1px solid var(--bd);color:var(--mu);font-weight:500}
+.grid{display:grid;gap:10px;grid-template-columns:1fr}
+.cd{display:flex;gap:10px;align-items:center;min-height:58px;padding:12px;border:1px solid var(--bd);border-radius:var(--r);background:var(--cd);text-align:start}
+.cd.k{cursor:pointer}.cd.off{opacity:.5;pointer-events:none}
+.ic{display:grid;place-items:center;flex:none;width:30px;height:30px;border:1px solid var(--bd);border-radius:8px}
+.cd b{display:block;font-weight:500}.cd small{display:block;color:var(--mu);font-size:11px}
+.tx{flex:1;min-width:0}
+.v{margin-inline-start:auto;font-weight:600;font-size:15px}
+.ch{color:var(--mu);font-size:16px}
+.bar{height:6px;margin-top:8px;border-radius:9px;background:var(--in);overflow:hidden}.bar i{display:block;height:100%;background:var(--ac)}
+.sw{position:relative;width:34px;height:20px;border-radius:99px;background:var(--bd);flex:none}
+.sw:after{content:"";position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:#fff;transition:.2s}
+.sw.on{background:var(--ac)}.sw.on:after{left:16px}
+.tabs{position:fixed;inset:auto 0 0;display:flex;padding:6px 6px calc(6px + env(safe-area-inset-bottom));background:var(--sb);border-top:1px solid var(--bd)}
+.tb{flex:1;padding:6px 0;border:0;background:none;color:var(--mu);font-size:10px}
+.tb span{display:block;font-size:19px}.tb.on{color:var(--ac)}
+.sheet{position:fixed;inset:0;display:none;align-items:flex-end;background:#0008}.sheet.on{display:flex}
+.sheet>div{display:grid;gap:6px;width:100%;padding:14px 14px calc(14px + env(safe-area-inset-bottom));border-radius:18px 18px 0 0;background:var(--sb)}
+.toast{position:fixed;left:50%;bottom:96px;transform:translateX(-50%);padding:9px 16px;border-radius:99px;background:var(--tx);color:var(--bg);opacity:0;pointer-events:none;transition:.2s}.toast.on{opacity:1}
+@media(min-width:640px){.rail{display:flex}.tabs{display:none}.grid{grid-template-columns:1fr 1fr}main{padding:24px}.toast{bottom:28px}}
+@media(min-width:1024px){.rail{display:none}.side{display:flex}.grid{grid-template-columns:repeat(3,1fr)}.app{max-width:1280px;height:calc(100% - 32px);margin:16px auto;border:1px solid var(--bd);border-radius:16px;overflow:hidden}}
+</style></head>
+<body>
+<div class="app"><nav class="rail" id="rail"></nav><aside class="side" id="side"></aside><main id="main"></main></div>
+<nav class="tabs" id="tabs"></nav><div class="sheet" id="sheet"><div id="sh"></div></div><div class="toast" id="toast"></div>
+<script>
+/* ===== CONFIG (edit here) ===== */
+const C={
+ nav:[{id:"home",i:"🏠"},{id:"earn",i:"🎬"},{id:"shop",i:"🛒"},{id:"wallet",i:"👛"},{id:"ref",i:"👥"},{id:"rew",i:"🎁"},{id:"lang",i:"🌐"},{id:"help",i:"💬"}],
+ tabs:["home","earn","shop","wallet"],
+ screens:{
+  home:[{h:"balances",c:[{t:"earned",v:"e",i:"🪙"},{t:"bought",v:"b",i:"💎"},{t:"friends",v:"r",i:"👥"},{t:"streak",v:"st",i:"🔥"}]},
+        {h:"quick",c:[{t:"earn",s:"watch_s",i:"🎬",go:"earn"},{t:"shop",s:"price_s",i:"🛒",go:"shop"},{t:"spin",s:"spin_s",i:"🎡",go:"rew"},{t:"invite",s:"gift",i:"👥",go:"ref"}]}],
+  earn:[{h:"ads",c:[{t:"watch",s:"watch_s",i:"🎬",a:"watch",tm:"cd"},{t:"rules",s:"nocash",i:"ℹ️",info:1}]}],
+  shop:[{h:"svc",c:[{n:"Instagram",s:"price_s",i:"📸",a:"shop",x:"instagram"},{n:"YouTube",s:"price_s",i:"▶️",a:"shop",x:"youtube"},{n:"Telegram",s:"price_s",i:"✈️",a:"shop",x:"telegram"},{n:"TikTok",s:"price_s",i:"🎵",a:"shop",x:"tiktok"}]},
+        {h:"orders",c:[{t:"orders",s:"orders_s",i:"📦",a:"orders"}]}],
+  wallet:[{h:"coins",c:[{t:"earned",v:"e",i:"🪙"},{t:"bought",v:"b",i:"💎"}]},
+          {h:"actions",c:[{t:"buy",s:"buy_s",i:"💳",a:"buy"},{t:"hist",s:"hist_s",i:"🧾",a:"history"},{t:"rules",s:"nocash",i:"ℹ️",info:1}]}],
+  ref:[{h:"invite",c:[{t:"copy",s:"copy_s",i:"🔗",a:"copy"},{t:"friends",v:"r",i:"👥"},{t:"gift",s:"gift_s",i:"🎁",p:1}]}],
+  rew:[{h:"spin",c:[{t:"spin",s:"spin_s",i:"🎡",a:"spin",tm:"sp"},{t:"xspin",s:"xspin_s",i:"🎬",a:"xspin"}]},
+       {h:"streak",c:[{t:"claim",s:"claim_s",i:"🔥",a:"claim"},{t:"contest",s:"contest_s",i:"🏆",a:"contest"}]}],
+  lang:[{h:"lang",c:[{n:"English",i:"🇬🇧",l:"en"},{n:"বাংলা",i:"🇧🇩",l:"bn"}]}],
+  help:[{h:"help",c:[{t:"support",i:"💬",a:"support"},{t:"dark",s:"theme_s",i:"🌗",tg:1}]}]
+ },
+ i18n:{
+  en:{dash:"Dashboard",overview:"Overview",search:"What do you want to find?",home:"Home",earn:"Earn",shop:"Shop",wallet:"Wallet",ref:"Invite",rew:"Rewards",lang:"Language",help:"Support",more:"More",
+   balances:"Balances",quick:"Quick access",ads:"Ads",svc:"Services",orders:"Orders",coins:"Coins",actions:"Actions",invite:"Invite friends",spin:"Lucky spin",streak:"Daily streak",
+   earned:"Earned coins",bought:"Bought coins",friends:"Friends",watch:"Watch an ad",watch_s:"30s gap, 5 min break after 10-15 ads",rules:"Good to know",
+   nocash:"Earned coins can't be cashed out, but you can spend them in the shop.",price_s:"Price shown inside the order",orders_s:"Track your orders",buy:"Buy coins",
+   buy_s:"Bought coins can be spent in the shop",hist:"History",hist_s:"Earnings and spending",copy:"Copy invite link",copy_s:"Share it with friends",gift:"Gift at 10 friends",gift_s:"Reach 10 friends to unlock a gift",
+   spin_s:"Every 12 hours",xspin:"Extra spin",xspin_s:"Watch an ad for one more spin",claim:"Claim daily bonus",claim_s:"Come back every day to grow your streak",
+   contest:"Weekly top inviters",contest_s:"Win shop credit",support:"Contact support",dark:"Dark mode",theme_s:"Switch light and dark",help2:"Help",
+   ready:"Ready",copied:"Link copied",sent:"Sent to bot",light:"Light",night:"Dark"},
+  bn:{dash:"ড্যাশবোর্ড",overview:"ওভারভিউ",search:"কী খুঁজছেন?",home:"হোম",earn:"আয়",shop:"শপ",wallet:"ওয়ালেট",ref:"রেফার",rew:"রিওয়ার্ড",lang:"ভাষা",help:"সাপোর্ট",more:"আরও",
+   balances:"ব্যালেন্স",quick:"দ্রুত অ্যাক্সেস",ads:"বিজ্ঞাপন",svc:"সার্ভিস",orders:"অর্ডার",coins:"কয়েন",actions:"অ্যাকশন",invite:"বন্ধুদের ইনভাইট করুন",spin:"লাকি স্পিন",streak:"দৈনিক স্ট্রিক",
+   earned:"আয় করা কয়েন",bought:"কেনা কয়েন",friends:"বন্ধু",watch:"বিজ্ঞাপন দেখুন",watch_s:"৩০ সেকেন্ড বিরতি, ১০-১৫ বিজ্ঞাপনের পর ৫ মিনিট",rules:"জেনে রাখুন",
+   nocash:"আয় করা কয়েন তোলা যায় না, তবে শপে খরচ করা যায়।",price_s:"দাম অর্ডারের ভেতরে দেখানো হবে",orders_s:"অর্ডার ট্র্যাক করুন",buy:"কয়েন কিনুন",
+   buy_s:"কেনা কয়েন শপে খরচ করা যায়",hist:"হিস্ট্রি",hist_s:"আয় ও খরচ",copy:"ইনভাইট লিংক কপি",copy_s:"বন্ধুদের সাথে শেয়ার করুন",gift:"১০ বন্ধুতে গিফট",gift_s:"১০ বন্ধু হলে গিফট আনলক হবে",
+   spin_s:"প্রতি ১২ ঘণ্টায়",xspin:"এক্সট্রা স্পিন",xspin_s:"বিজ্ঞাপন দেখে আরেকটি স্পিন",claim:"দৈনিক বোনাস নিন",claim_s:"প্রতিদিন আসুন, স্ট্রিক বাড়ান",
+   contest:"সাপ্তাহিক টপ ইনভাইটার",contest_s:"শপ ক্রেডিট জিতুন",support:"সাপোর্টে যোগাযোগ",dark:"ডার্ক মোড",theme_s:"লাইট ও ডার্ক পরিবর্তন",
+   ready:"প্রস্তুত",copied:"লিংক কপি হয়েছে",sent:"বটে পাঠানো হয়েছে",light:"লাইট",night:"ডার্ক"}
+ }
+};
+/* ===== APP ===== */
+const T=(window.Telegram||{}).WebApp||{},P=new URLSearchParams(location.search),U=(T.initDataUnsafe||{}).user||{};
+const ls=(k,v)=>{try{return v===undefined?localStorage.getItem(k):localStorage.setItem(k,v)}catch(e){}};
+const D={e:+P.get("e")||0,b:+P.get("b")||0,r:+P.get("r")||0,st:+P.get("st")||0,sp:+P.get("sp")||0,cd:+P.get("cd")||0};
+let lang=P.get("lang")||ls("lang")||"en",theme=P.get("theme")||ls("theme")||T.colorScheme||(matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light"),cur="home",q="",cards=[];
+const $=id=>document.getElementById(id),esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const t=k=>(C.i18n[lang]||{})[k]??C.i18n.en[k]??k;
+const fmt=s=>s>=3600?Math.floor(s/3600)+"h "+Math.floor(s%3600/60)+"m":Math.floor(s/60)+":"+String(s%60).padStart(2,"0");
+function toast(m){const e=$("toast");e.textContent=m;e.classList.add("on");setTimeout(()=>e.classList.remove("on"),1800)}
+function pill(){return `<div class="pill"><button data-th="light" class="${theme=="light"?"on":""}">☀️ ${t("light")}</button><button data-th="dark" class="${theme=="dark"?"on":""}">🌙 ${t("night")}</button></div>`}
+function setTheme(v){theme=v||(theme=="dark"?"light":"dark");ls("theme",theme);render()}
+function go(id){cur=id;q="";$("sheet").classList.remove("on");render();$("main").scrollTop=0}
+function card(c){
+ const off=c.tm&&D[c.tm]>0,ti=c.n||t(c.t);
+ let v="";
+ if(c.v)v=`<span class="v">${D[c.v]}</span>`;
+ else if(c.tm)v=`<span class="v">${off?fmt(D[c.tm]):t("ready")}</span>`;
+ else if(c.p)v=`<span class="v">${D.r}/10</span>`;
+ else if(c.l)v=lang==c.l?`<span class="v">✓</span>`:"";
+ else if(c.tg)v=`<span class="sw ${theme=="dark"?"on":""}"></span>`;
+ else if(!c.info)v=`<span class="ch">›</span>`;
+ const k=!c.v&&!c.info&&!c.p;
+ cards.push(c);
+ return `<div class="cd ${k?"k":""} ${off?"off":""}" ${k?`data-c="${cards.length-1}"`:""}><span class="ic">${c.i}</span><div class="tx"><b>${esc(ti)}</b>${c.s?`<small>${esc(t(c.s))}</small>`:""}${c.p?`<div class="bar"><i style="width:${Math.min(D.r/10,1)*100}%"></i></div>`:""}</div>${v}</div>`}
+function body(){
+ cards=[];const ql=q.toLowerCase();
+ $("bd").innerHTML=(C.screens[cur]||[]).map(s=>{
+  const l=s.c.filter(c=>!ql||((c.n||t(c.t))+" "+(c.s?t(c.s):"")).toLowerCase().includes(ql));
+  return l.length?`<div class="sh"><span>${t(s.h)}</span><span>···</span></div><div class="grid">${l.map(card).join("")}</div>`:""}).join("")}
+function render(){
+ document.documentElement.dataset.theme=theme;document.documentElement.dir=lang=="ar"?"rtl":"ltr";
+ if(T.setHeaderColor)try{T.setHeaderColor(theme=="dark"?"#000000":"#ffffff")}catch(e){}
+ const badge=id=>id=="rew"&&D.sp<=0?`<span class="bd">1</span>`:"";
+ $("side").innerHTML=`<div class="logo">▰ Free Side Income</div><h3>${t("dash")}</h3>`+C.nav.map(n=>`<button class="ni ${n.id==cur?"on":""}" data-g="${n.id}"><span>${n.i}</span>${t(n.id)}${badge(n.id)}</button>`).join("")+pill();
+ $("rail").innerHTML=C.nav.map(n=>`<button class="rb ${n.id==cur?"on":""}" data-g="${n.id}">${n.i}</button>`).join("")+`<button class="rb" data-th style="margin-top:auto">${theme=="dark"?"☀️":"🌙"}</button>`;
+ const ic=id=>C.nav.find(n=>n.id==id).i,rest=C.nav.filter(n=>!C.tabs.includes(n.id));
+ $("tabs").innerHTML=C.tabs.map(id=>`<button class="tb ${id==cur?"on":""}" data-g="${id}"><span>${ic(id)}</span>${t(id)}</button>`).join("")+`<button class="tb ${rest.some(n=>n.id==cur)?"on":""}" data-m><span>⋯</span>${t("more")}</button>`;
+ $("sh").innerHTML=rest.map(n=>`<button class="ni ${n.id==cur?"on":""}" data-g="${n.id}"><span>${n.i}</span>${t(n.id)}${badge(n.id)}</button>`).join("")+pill();
+ const nm=((U.first_name||"Guest")+" "+(U.last_name||"")).trim();
+ $("main").innerHTML=`<div class="top"><h1>${cur=="home"?t("overview"):t(cur)}</h1><input class="srch" id="q" placeholder="${esc(t("search"))}" value="${esc(q)}"></div>`+
+  (cur=="home"?`<div class="me"><div class="av">${esc(nm[0].toUpperCase())}</div><div><b>${esc(nm)}</b><small>${U.username?"@"+esc(U.username):"ID "+(U.id||"-")}</small></div></div>`:"")+`<div id="bd"></div>`;
+ $("q").oninput=e=>{q=e.target.value;body()};body()}
+function act(c){
+ if(c.go)return go(c.go);
+ if(c.l){lang=c.l;ls("lang",lang);return render()}
+ if(c.tg)return setTheme();
+ if(c.a=="copy"){try{navigator.clipboard.writeText(P.get("link")||"")}catch(e){}return toast(t("copied"))}
+ if(c.a){const d=JSON.stringify({a:c.a,x:c.x||null});if(T.HapticFeedback)T.HapticFeedback.impactOccurred("light");T.initData?T.sendData(d):toast(t("sent")+": "+c.a)}}
+document.addEventListener("click",e=>{
+ const g=e.target.closest("[data-g],[data-th],[data-m],[data-c],.sheet");if(!g)return;
+ const d=g.dataset;
+ if(d.g)go(d.g);else if("th"in d)setTheme(d.th);else if("m"in d)$("sheet").classList.add("on");else if(d.c)act(cards[+d.c]);else $("sheet").classList.remove("on")});
+setInterval(()=>{let x=0;["cd","sp"].forEach(k=>{if(D[k]>0){D[k]--;x=1}});if(x)body()},1000);
+if(T.ready)T.ready();if(T.expand)T.expand();
+render();
+</script></body></html>
